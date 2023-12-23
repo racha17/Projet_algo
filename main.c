@@ -96,7 +96,7 @@ int main()
 
     printf("entrez le max de valeurs que peut contenir la pile:\n");
     scanf("%d", &N);
-    printf("%d\n",N);
+
 
     for (int i = 0; i < N; i++)
     {
