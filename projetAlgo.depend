@@ -19,9 +19,10 @@
 
 1702245061 c:\users\asus\documents\projet_algo\liste.h
 
-1703262041 source:c:\users\asus\documents\projet_algo\main.c
+1703368010 source:c:\users\asus\documents\projet_algo\main.c
 	<stdio.h>
 	<stdlib.h>
+	<stdbool.h>
 
 1701701992 c:\msys64\mingw64\include\stdio.h
 	<corecrt_stdio_config.h>
