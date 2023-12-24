@@ -34,18 +34,20 @@ void suppression(Pile *pile, int val)
 
     Pile pile1;
     pile1.first = NULL;
-
+    list *P;
+    int x;
     while (!Pilevide(pile))
     {
-        int x = depiler(pile);
-        if (x != val)
+        x = depiler(pile);
+        if (x!=val)
         {
             empiler(&pile1, x);
         }
 
-        while (!Pilevide(&pile1))
+    }
+    while (!Pilevide(&pile1))
         {
             empiler(pile, depiler(&pile1));
         }
-    }
+
 }
