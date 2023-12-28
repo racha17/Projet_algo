@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "structure.h"
-#include "F_predefenies.h"
+#include "F_predefinies.h"
 #include "Fonctions.h"
 
 void afficher(Pile *pile)
@@ -39,15 +39,13 @@ void suppression(Pile *pile, int val)
     while (!Pilevide(pile))
     {
         x = depiler(pile);
-        if (x!=val)
+        if (x != val)
         {
             empiler(&pile1, x);
         }
-
     }
     while (!Pilevide(&pile1))
-        {
-            empiler(pile, depiler(&pile1));
-        }
-
+    {
+        empiler(pile, depiler(&pile1));
+    }
 }

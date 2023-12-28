@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "structure.h"
-#include "F_predefenies.h"
+#include "F_predefinies.h"
 
 Pile initPile()
 {

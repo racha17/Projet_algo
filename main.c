@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "structure.h"
-#include "F_predefenies.h"
+#include "F_predefinies.h"
 #include "Fonctions.h"
 
 int main()
