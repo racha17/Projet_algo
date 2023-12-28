@@ -38,6 +38,19 @@ if (recherche(&Mapile,val)==false)
 }
 else printf("la valeur existe . \n");
 
+//ALGORITHME DE TRANSFORMATION
+    char expression[MAX_TAILLE_EXPRESSION];
+
+    printf("Entrez une expression infixée : ");
+    fgets(expression, sizeof(expression), stdin);
+
+    printf("L'expression postfixée est : ");
+    transformerExpression(expression);
+
+    return 0;
+}
+
+    
     
 }
 
