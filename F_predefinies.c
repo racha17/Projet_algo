@@ -56,3 +56,49 @@ int depiler(Pile *pile)
     }
     return nbrdepile;
 }
+/* les fonction predefinies pour l'algorithme de transformation parce que il utilise la representation contigue*/
+
+typedef struct {
+    char items[MAX_TAILLE_EXPRESSION];
+    int top;
+} Pile;
+
+void initPileAT(Pile *pile) {
+    pile->top = -1;
+}
+
+int pileVideAT(Pile *pile) {
+    return pile->top == -1;
+}
+
+int pilePleine(Pile *pile) {
+    return pile->top == MAX_TAILLE_EXPRESSION - 1;
+}
+
+void empilerAT(Pile *pile, char element) {
+    if (!pilePleine(pile)) {
+        pile->items[++pile->top] = element;
+    } else {
+        printf("Erreur : la pile est pleine.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+char depilerAT(Pile *pile) {
+    if (!pileVide(pile)) {
+        return pile->items[pile->top--];
+    } else {
+        printf("Erreur : la pile est vide.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+char sommetPileAT(Pile *pile) {
+    if (!pileVide(pile)) {
+        return pile->items[pile->top];
+    } else {
+        printf("Erreur : la pile est vide.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
