@@ -63,11 +63,11 @@ typedef struct {
     int top;
 } Pile;
 
-void initPile(Pile *pile) {
+void initPile2(Pile *pile) {
     pile->top = -1;
 }
 
-int pileVide(Pile *pile) {
+int pileVide2(Pile *pile) {
     return pile->top == -1;
 }
 
