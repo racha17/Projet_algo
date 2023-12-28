@@ -4,8 +4,7 @@
 void afficher(Pile *pile);
 void suppression(Pile *pile, int val);
 bool recherche(Pile *pile, int val);
-int estOperateur(char c);
-int priorite(char c);
+void transformerExpression(char *expression);
 #endif // FONCTIONS_H_INCLUDED
 
 
