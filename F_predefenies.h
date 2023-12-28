@@ -9,5 +9,7 @@ int SommetPile(Pile *pile);
 void empiler(Pile *pile, int val);
 int depiler(Pile *pile);
 void afficher(Pile *pile);
+bool recherche(Pile *pile, int val);
+
 
 #endif // F_PREDEFINIES_H_INCLUDED
