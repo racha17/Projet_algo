@@ -17,6 +17,7 @@ char depilerAT(Pile *pile);
 char sommetPileAT(Pile *pile);
 int pileVideAT(Pile *pile);
 void initPileAT(Pile *pile);
-
+int estOperateur(char c);
+int priorite(char c);
 
 #endif // F_PREDEFINIES_H_INCLUDED
