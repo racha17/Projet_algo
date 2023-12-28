@@ -1,0 +1,8 @@
+Pour compiler le programme
+1-Ouvrir powershell en tant qu'administrateur et copier : Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+2- executer choco install make 
+3- redemarrer son pc (tres important)
+
+
+Apres pour chaque compilation il faut taper dans le terminal : make 
+./ProjetAlgo.exe
