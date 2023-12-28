@@ -3,6 +3,7 @@
 #include "structure.h"
 void afficher(Pile *pile);
 void suppression(Pile *pile, int val);
+bool recherche(Pile *pile, int val);
 
 #endif // FONCTIONS_H_INCLUDED
 
