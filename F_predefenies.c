@@ -63,11 +63,11 @@ typedef struct {
     int top;
 } Pile;
 
-void initPile2(Pile *pile) {
+void initPileAT(Pile *pile) {
     pile->top = -1;
 }
 
-int pileVide2(Pile *pile) {
+int pileVideAT(Pile *pile) {
     return pile->top == -1;
 }
 
@@ -75,7 +75,7 @@ int pilePleine(Pile *pile) {
     return pile->top == MAX_TAILLE_EXPRESSION - 1;
 }
 
-void empiler(Pile *pile, char element) {
+void empilerAT(Pile *pile, char element) {
     if (!pilePleine(pile)) {
         pile->items[++pile->top] = element;
     } else {
@@ -84,7 +84,7 @@ void empiler(Pile *pile, char element) {
     }
 }
 
-char depiler(Pile *pile) {
+char depilerAT(Pile *pile) {
     if (!pileVide(pile)) {
         return pile->items[pile->top--];
     } else {
@@ -93,7 +93,7 @@ char depiler(Pile *pile) {
     }
 }
 
-char sommetPile(Pile *pile) {
+char sommetPileAT(Pile *pile) {
     if (!pileVide(pile)) {
         return pile->items[pile->top];
     } else {
