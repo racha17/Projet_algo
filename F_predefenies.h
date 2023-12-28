@@ -11,12 +11,12 @@ int depiler(Pile *pile);
 void afficher(Pile *pile);
 
 /* pour l'algorithme de transformation */
-void empiler(Pile *pile, char element);
+void empilerAT(Pile *pile, char element);
 int pilePleine(Pile *pile);
-char depiler(Pile *pile);
-char sommetPile(Pile *pile);
-int pileVide2(Pile *pile);
-void initPile2(Pile *pile);
+char depilerAT(Pile *pile);
+char sommetPileAT(Pile *pile);
+int pileVideAT(Pile *pile);
+void initPileAT(Pile *pile);
 
 
 #endif // F_PREDEFINIES_H_INCLUDED
