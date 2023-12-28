@@ -75,3 +75,22 @@ bool recherche(Pile *pile, int val)
 
     return trouve;
 }
+
+
+// Fonction pour vérifier si un caractère est un opérateur
+int estOperateur(char c) {
+    return c == '+' || c == '-' || c == '*' || c == '/';
+}
+
+
+
+// Fonction pour obtenir la priorité d'un opérateur
+int priorite(char c) {
+    if (c == '+' || c == '-') {
+        return 1;
+    } else if (c == '*' || c == '/') {
+        return 2;
+    } else {
+        return 0;
+    }
+}
