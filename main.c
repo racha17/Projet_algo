@@ -38,6 +38,15 @@ if (recherche(&Mapile,val)==false)
 }
 else printf("la valeur existe . \n");
 
+/* Algorithme d' UTILISATION DES PILES DANS 
+L’EVALUATION DES EXPRESSIONS 
+ARITHMETIQUES
+Une utilisation courante des piles est l’élaboration par le 
+compilateur d’une forme intermédiaire de l’expression à évaluer. 
+Après l’analyse lexicale et syntaxique, l’expression est traduite en 
+une forme intermédiaire plus facilement évaluable*/
+    
+
+    
 }
 
-}
