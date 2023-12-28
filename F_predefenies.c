@@ -57,27 +57,3 @@ int depiler(Pile *pile)
     return nbrdepile;
 }
 
-bool recherche(Pile *pile, int val)
-{
-    bool trouve;
-
-    Pile R = initPile();
-    trouve = false;
-
-    while (!Pilevide(pile) && SommetPile(pile) != val)
-    {
-        empiler(&R, depiler(pile));
-    }
-
-    if (!Pilevide(pile))
-    {
-        trouve = true;
-    }
-
-    while (!Pilevide(&R))
-    {
-        empiler(pile, depiler(&R));
-    }
-
-    return trouve;
-}
