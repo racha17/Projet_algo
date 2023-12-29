@@ -28,7 +28,7 @@ int main()
     suppression(&Mapile, val);
     afficher(&Mapile);
     
-    printf("veuillez donner la valeur que vous voulez rechercher ");
+    printf("veuillez donner la valeur que vous voulez rechercher:\n ");
     scanf("%d",&val2);
     if (recherche(&Mapile,val)==false)
     {
