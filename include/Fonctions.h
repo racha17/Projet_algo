@@ -1,11 +1,8 @@
 #ifndef FONCTIONS_H_INCLUDED
 #define FONCTIONS_H_INCLUDED
 #include "structure.h"
+#include <stdbool.h>
 void afficher(Pile *pile);
 void suppression(Pile *pile, int val);
 bool recherche(Pile *pile, int val);
-int estOperateur(char c);
-int priorite(char c);
 #endif // FONCTIONS_H_INCLUDED
-
-
