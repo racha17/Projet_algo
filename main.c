@@ -27,17 +27,18 @@ int main()
 
     suppression(&Mapile, val);
     afficher(&Mapile);
-    return 0;
+    
     printf("veuillez donner la valeur que vous voulez rechercher ");
-scanf("%d",&val2);
-
-if (recherche(&Mapile,val)==false)
-{
-    printf("la valeur n'existe pas. \n ");
-
-}
-else printf("la valeur existe . \n");
-
+    scanf("%d",&val2);
+    if (recherche(&Mapile,val)==false)
+    {
+        printf("la valeur n'existe pas. \n ");
+    }
+    else 
+    {
+        printf("la valeur existe . \n");
+    }
+    
 //ALGORITHME DE TRANSFORMATION
     char expression[MAX_TAILLE_EXPRESSION];
 
@@ -48,9 +49,5 @@ else printf("la valeur existe . \n");
     transformerExpression(expression);
 
     return 0;
-}
-
-    
-    
 }
 
