@@ -30,7 +30,7 @@ int main()
     
     printf("veuillez donner la valeur que vous voulez rechercher:\n ");
     scanf("%d",&val2);
-    if (recherche(&Mapile,val)==false)
+    if (recherche(&Mapile,val2)==false)
     {
         printf("la valeur n'existe pas. \n ");
     }
