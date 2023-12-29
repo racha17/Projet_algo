@@ -122,3 +122,8 @@ void transformerExpression(char *expression) {
         printf("%c ", x);
     }
 }
+void insertion (Pile *pile,int val)
+{
+    empiler(pile,val);
+
+}
