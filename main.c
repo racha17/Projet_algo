@@ -9,7 +9,8 @@ int main()
 {
 
     Pile Mapile = initPile();
-    int N, val, val2;
+    int N, val, val2,valeur;
+    char choix;
 
     printf("entrez le max de valeurs que peut contenir la pile:\n");
     scanf("%d", &N);
@@ -47,6 +48,26 @@ int main()
 
     printf("L'expression postfixée est : ");
     transformerExpression(expression);
+    
+    // INSERTION
+    
+    printf ("voulez-vous entrer une valeur O/N ?:\n");
+    scanf ("%c",&choix);
+    if (choix=='O'||choix=='o'){
+        /*demander à l'utilisateur d'entrer une valeur*/
+    printf ("donnez une valeur à ajouter:\n");
+    scanf ("%d",&valeur);
+    } else {
+        /*choisir une valeur aléatoire*/
+        
+        valeur = rand() %100; /*valeurs entre 0 et 99*/
+    }
+    /*inserer la valeur dans la pile*/
+    insertion(&Mapile,valeur);
+    /*affichage*/
+    printf ("Etat de la pile aprés insertion :\n");
+    afficherPile(&Mapile);
+
 
     return 0;
 }
