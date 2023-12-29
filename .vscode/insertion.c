@@ -76,7 +76,7 @@ int main (){
     int valpile;
     initialiserpile(&mapile);
     /*création de la pile*/
-    printf ("donnez le max d'elements que peut contenir la pile :\n");
+    printf ("donnez le max d'elements que la pile peut contenir :\n");
     scanf ("%d",&n);
     for (int i=1;i<=n;i++)
     {
