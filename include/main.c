@@ -6,17 +6,7 @@
 #include "F_predefinies.h"
 #include "Fonctions.h"
 
-void drawRectanglePile(Pile *pile, int posX, int posY, int spacing, Color color)
-{
-    int count = 0;
-    list *current = pile->first;
-    while (current != NULL)
-    {
-        DrawRectangle(posX, posY - count * spacing, 50, 30, color);
-        current = current->svt;
-        count++;
-    }
-}
+
 int main()
 {
 
@@ -50,39 +40,5 @@ int main()
     // {
     //     printf("la valeur existe . \n");
     // }
-    int screenWidth = 800;
-    int screenHeight = 450;
-
-    InitWindow(screenWidth, screenHeight, "Pile Implementation with Raylib");
-
-    // Create pile and fill with data
-    Pile Mapile = initPile();
-    int N, val;
-
-    printf("Enter the max number of values that can be contained in the pile:\n");
-    scanf("%d", &N);
-
-    for (int i = 0; i < N; i++)
-    {
-        scanf("%d", &val);
-        empiler(&Mapile, val);
-    }
-
-    // Main game loop
-    while (!WindowShouldClose())
-    {
-
-        // Draw
-        BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-        drawRectanglePile(&Mapile, 200, 200, 40, BLUE);
-
-        DrawText("Press ESC to close", 10, 10, 20, GRAY);
-
-        EndDrawing();
-    }
-
-    // De-Initialization
-    CloseWindow(); // Close window and OpenGL context
+   
 }
