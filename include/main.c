@@ -11,7 +11,7 @@ int main()
 {
 
     // Pile Mapile = initPile();
-    // int N, val , valeur ;
+     int N, val , valeur ;
        char choix;
     // printf("entrez le max de valeurs que peut contenir la pile:\n");
     // scanf("%d", &N);
