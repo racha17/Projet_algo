@@ -50,30 +50,7 @@ void suppression(Pile *pile, int val)
     }
 }
 
-bool recherche(Pile *pile, int val)
-{
-    bool trouve;
 
-    Pile R = initPile();
-    trouve = false;
-
-    while (!Pilevide(pile) && SommetPile(pile) != val)
-    {
-        empiler(&R, depiler(pile));
-    }
-
-    if (!Pilevide(pile))
-    {
-        trouve = true;
-    }
-
-    while (!Pilevide(&R))
-    {
-        empiler(pile, depiler(&R));
-    }
-
-    return trouve;
-}
 void insertion (Pile *pile,int val)
 {
     empiler(pile,val);
