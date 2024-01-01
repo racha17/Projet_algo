@@ -3,5 +3,5 @@
 #include "structure.h"
 #include <stdbool.h>
 void afficher(Pile *pile);
-void suppression(Pile *pile, int val);
+bool suppression(Pile *pile, int val);
 #endif // FONCTIONS_H_INCLUDED

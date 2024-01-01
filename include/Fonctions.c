@@ -29,13 +29,13 @@ void afficher(Pile *pile)
 
     printf("\n");
 }
-void suppression(Pile *pile, int val)
+bool suppression(Pile *pile, int val)
 {
 
     Pile pile1;
     pile1.first = NULL;
-
     int x;
+    bool trouve = false;
     while (!Pilevide(pile))
     {
         x = depiler(pile);
@@ -43,10 +43,14 @@ void suppression(Pile *pile, int val)
         {
             empiler(&pile1, x);
         }
+        else
+        {
+            trouve = true;
+        }
     }
     while (!Pilevide(&pile1))
     {
         empiler(pile, depiler(&pile1));
     }
-    int element = val;
+    return trouve;
 }

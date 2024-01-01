@@ -7,11 +7,9 @@
 #include "F_predefinies.h"
 #include "Fonctions.h"
 
-#define SCREEN_WIDTH 1000
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1200
+#define SCREEN_HEIGHT 800
 #define MAX_BUTTONS 3
-
-// Constants for button dimensions
 #define BUTTON_WIDTH 200
 #define BUTTON_HEIGHT 50
 
@@ -20,21 +18,21 @@ typedef struct Button
     Rectangle rect;
     Color color;
     const char *text;
-    bool pressed;
+    int pressed;
 } Button;
 
-void DrawPile(Pile *pile, bool drawEmptyPile)
+void DrawPile(Pile *pile, Pile *pile2, bool drawPilevide)
 {
+    int yOffset;
 
-    if (drawEmptyPile)
+    // Draw the first pile
+    if (drawPilevide)
     {
-        // Draw an empty rectangle to represent the empty pile
         DrawRectangleLinesEx((Rectangle){500, 500, 150, 70}, 2, DARKGRAY);
     }
     else
     {
-        // Draw the elements of the pile
-        int yOffset = 200;
+        yOffset = 200;
         int val;
         Pile pile1 = initPile();
 
@@ -47,14 +45,34 @@ void DrawPile(Pile *pile, bool drawEmptyPile)
             yOffset += 65;
         }
 
-        // Restore the original pile in the correct order
         while (!Pilevide(&pile1))
         {
             empiler(pile, depiler(&pile1));
         }
     }
-}
 
+    // Draw the second pile
+    yOffset = 200;
+    if (!Pilevide(pile2))
+    {
+        int val;
+        Pile pile1 = initPile();
+
+        while (!Pilevide(pile2))
+        {
+            val = depiler(pile2);
+            empiler(&pile1, val);
+            DrawRectangleRec((Rectangle){700, yOffset, 180, 60}, RED);
+            DrawText(TextFormat("%d", val), 720, yOffset + 2, 20, WHITE);
+            yOffset += 65;
+        }
+
+        while (!Pilevide(&pile1))
+        {
+            empiler(pile2, depiler(&pile1));
+        }
+    }
+}
 int main(void)
 {
 
@@ -88,8 +106,11 @@ int main(void)
         {{50, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "insert", false},
         {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "remove", false}};
 
-    Pile myPile = initPile();
-    bool drawEmptyPile = false;
+    Pile MaPile = initPile();
+
+    Pile pile2 = initPile();
+
+    bool drawPilevide = false;
 
     char inputText[256] = "";
 
@@ -99,7 +120,7 @@ int main(void)
         {
             if (CheckCollisionPointRec(GetMousePosition(), buttons[i].rect))
             {
-                buttons[i].color = BEIGE;
+                buttons[i].color = BROWN;
 
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
@@ -107,34 +128,42 @@ int main(void)
 
                     if (i == 0)
                     {
-                        myPile = initPile();
-                        drawEmptyPile = true;
-                        printf("Pile created!\n");
+                        MaPile = initPile();
+                        drawPilevide = true;
+                        printf("Pile a ete cree!\n");
                     }
                     else if (i == 1)
                     {
-                        // Use strtol for better error handling
+
                         char *endptr;
-                        int value = (int)strtol(inputText, &endptr, 10);
+                        int val = (int)strtol(inputText, &endptr, 10);
 
                         if (*endptr == '\0')
                         {
-                            empiler(&myPile, value);
-                            drawEmptyPile = false;
-                            printf("Value inserted: %d\n", value);
+                            empiler(&MaPile, val);
+                            drawPilevide = false;
+                            printf("Valeur inseree %d\n", val);
                         }
                         memset(inputText, 0, sizeof(inputText));
                     }
                     else if (i == 2)
                     {
                         char *endptr;
-                        int value = (int)strtol(inputText, &endptr, 10);
+                        int val = (int)strtol(inputText, &endptr, 10);
                         if (*endptr == '\0')
                         {
-                            suppression(&myPile, value);
-                            drawEmptyPile = false;
-                            printf("Value removed: %d\n", value);
+                            if (suppression(&MaPile, val))
+                            {
+                                empiler(&pile2, val);
+                                drawPilevide = false;
+                                printf("Valeur supprimee: %d\n", val);
+                            }
+                            else
+                            {
+                                printf("la valeur %d n'existe pas dans la pile.\n", val);
+                            }
                         }
+
                         memset(inputText, 0, sizeof(inputText));
                     }
                 }
@@ -156,13 +185,13 @@ int main(void)
         if (IsKeyPressed(KEY_ENTER))
         {
             char *endptr;
-            int value = (int)strtol(inputText, &endptr, 10);
+            int val = (int)strtol(inputText, &endptr, 10);
 
             if (*endptr == '\0')
             {
-                empiler(&myPile, value);
-                drawEmptyPile = false;
-                printf("Value inserted: %d\n", value);
+                empiler(&MaPile, val);
+                drawPilevide = false;
+                printf("val inserted: %d\n", val);
             }
             memset(inputText, 0, sizeof(inputText));
         }
@@ -183,7 +212,7 @@ int main(void)
 
         DrawText(inputText, inputBox.x + 5, inputBox.y + 5, 20, BEIGE);
 
-        DrawPile(&myPile, drawEmptyPile);
+        DrawPile(&MaPile, &pile2, drawPilevide);
 
         EndDrawing();
     }
