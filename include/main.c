@@ -30,16 +30,7 @@ int main()
     // suppression(&Mapile, val);
     // afficher(&Mapile);
 
-    // printf("veuillez donner la valeur que vous voulez rechercher:\n");
-    // scanf("%d", &val);
-    // if (recherche(&Mapile, val) == false)
-    // {
-    //     printf("la valeur existe n'existe pas\n ");
-    // }
-    // else
-    // {
-    //     printf("la valeur existe . \n");
-    // }
+  
     
    // INSERTION 
     printf ("voulez-vous entrer une valeur O/N ?:\n");
