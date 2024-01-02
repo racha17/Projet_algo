@@ -97,7 +97,7 @@ int main()
     // printf("l'etat de la pile apres suppression:\n");
     // afficher(&Mapile);
 
-    //       // INSERTION
+    //       // test INSERTION
     //     printf ("voulez-vous entrer une valeur O/N ?:\n");
     //     scanf ("%c",&choix);
     //     if (choix=='O'||choix=='o'){
