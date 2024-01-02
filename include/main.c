@@ -7,6 +7,74 @@
 #include "F_predefinies.h"
 #include "Fonctions.h"
 
+
+#define SCREEN_WIDTH 1200
+#define SCREEN_HEIGHT 800
+#define MAX_BUTTONS 3
+#define BUTTON_WIDTH 200
+#define BUTTON_HEIGHT 50
+
+typedef struct Button
+{
+    Rectangle rect;
+    Color color;
+    const char *text;
+    int pressed;
+} Button;
+
+void DrawPile(Pile *pile, Pile *pile2, bool drawPilevide)
+{
+    int yOffset;
+
+    // Draw the first pile
+    if (drawPilevide)
+    {
+        DrawRectangleLinesEx((Rectangle){500, 500, 150, 70}, 2, DARKGRAY);
+    }
+    else
+    {
+        yOffset = 200;
+        int val;
+        Pile pile1 = initPile();
+
+        while (!Pilevide(pile))
+        {
+            val = depiler(pile);
+            empiler(&pile1, val);
+            DrawRectangleRec((Rectangle){500, yOffset, 180, 60}, BROWN);
+            DrawText(TextFormat("%d", val), 520, yOffset + 2, 50, BEIGE);
+            yOffset += 65;
+        }
+
+        while (!Pilevide(&pile1))
+        {
+            empiler(pile, depiler(&pile1));
+        }
+    }
+
+    // Draw the second pile
+    yOffset = 200;
+    if (!Pilevide(pile2))
+    {
+        int val;
+        Pile pile1 = initPile();
+
+        while (!Pilevide(pile2))
+        {
+            val = depiler(pile2);
+            empiler(&pile1, val);
+            DrawRectangleRec((Rectangle){700, yOffset, 180, 60}, RED);
+            DrawText(TextFormat("%d", val), 720, yOffset + 2, 20, WHITE);
+            yOffset += 65;
+        }
+
+        while (!Pilevide(&pile1))
+        {
+            empiler(pile2, depiler(&pile1));
+        }
+    }
+}
+
 int main()
 {
 
