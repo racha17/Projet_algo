@@ -12,14 +12,7 @@
 #define MAX_BUTTONS 3
 #define BUTTON_WIDTH 200
 #define BUTTON_HEIGHT 50
-if (recherche(&Mapile,val)==false)
-{
-    printf("la valeur n'existe pas. \n ");
 
-}
-else printf("la valeur existe . \n");
-
-}
 
 typedef struct Button
 {
