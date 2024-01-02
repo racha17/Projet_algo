@@ -4,5 +4,5 @@
 #include <stdbool.h>
 void afficher(Pile *pile);
 bool suppression(Pile *pile, int val);
+void insertion(Pile *pile, int val);
 #endif // FONCTIONS_H_INCLUDED
-void insertion(Pile *pile,int val);
