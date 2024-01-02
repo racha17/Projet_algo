@@ -79,7 +79,7 @@ int main()
 
     // Initialiser la fenêtre
     // Pile Mapile = initPile();
-    //  int N, val , valeur ;
+    //  int N, val , valeur , val2;
     //    char choix;
     // printf("entrez le max de valeurs que peut contenir la pile:\n");
     // scanf("%d", &N);
@@ -115,6 +115,19 @@ int main()
     //     /*affichage*/
     //     printf ("Etat de la pile aprés insertion :\n");
     //     afficherPile(&Mapile);
+    /* printf("veuillez donner la valeur que vous voulez rechercher ");
+scanf("%d",&val2);
+
+if (recherche(&Mapile,val2)==false)
+{
+    printf("la valeur n'existe pas. \n ");
+
+}
+else printf("la valeur existe . \n");
+
+
+     */
+
 
     //   return 0;
 
