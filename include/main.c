@@ -92,8 +92,8 @@ int main(void)
 
     // printf("donnez la valeur que vous voulez supprimer:\n");
     // scanf("%d", &val);
-
     // suppression(&Mapile, val);
+    // printf("l'etat de la pile apres suppression:\n");
     // afficher(&Mapile);
 
     //}
