@@ -52,5 +52,9 @@ bool suppression(Pile *pile, int val)
     {
         empiler(pile, depiler(&pile1));
     }
-    return trouve;
+}
+
+void insertion(Pile *pile, int val)
+{
+    empiler(pile, val);
 }
