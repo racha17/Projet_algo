@@ -7,6 +7,26 @@
 #include "F_predefinies.h"
 #include "Fonctions.h"
 
+/* UTILISATION DES PILES DANS
+L’EVALUATION DES EXPRESSIONS
+ARITHMETIQUES */
+// une petite explication 
+/* Une utilisation courante des piles est l’élaboration par le
+compilateur d’une forme intermédiaire de l’expression à évaluer.
+Après l’analyse lexicale et syntaxique, l’expression est traduite en
+une forme intermédiaire plus facilement évaluable
+Soit l’expression : A + B. Son évaluation ne peut être faite
+immédiatement lors de la rencontre d’un opérateur car le 2ème
+opérande n’est pas encore connu par la machine. Par contre si
+l’expression pouvait être écrite sous la forme AB+ alors elle serait
+directement évaluable car les deux opérandes sont connus avant
+l’opérateur.
+La notation < Opérande> < Opérateur> < Opérande> est dite
+INFIXE.
+L’autre représentation plus facilement évaluable est dite POSTFIXE
+ou POLONAISE SUFFIXE. Elle a la forme :
+< Opérande Gauche > < Opérande Droit > < Opérateur> */
+
 
 #define MAX_TAILLE_EXPRESSION 100
 
