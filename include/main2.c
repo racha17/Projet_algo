@@ -34,22 +34,22 @@ ou POLONAISE SUFFIXE. Elle a la forme :
 typedef struct {
     char items[MAX_TAILLE_EXPRESSION];
     int top;
-} Pile;
+} Pile2;
 
-void initPile(Pile *pile) {
+void initPile2(Pile2 *pile) {
     pile->top = -1;
 }
 
-int pileVide(Pile *pile) {
+int pileVide2(Pile2 *pile) {
     return pile->top == -1;
 }
 
-int pilePleine(Pile *pile) {
+int pilePleine2(Pile2 *pile) {
     return pile->top == MAX_TAILLE_EXPRESSION - 1;
 }
 
-void empiler(Pile *pile, char element) {
-    if (!pilePleine(pile)) {
+void empiler2(Pile2 *pile, char element) {
+    if (!pilePleine2(pile)) {
         pile->items[++pile->top] = element;
     } else {
         printf("Erreur : la pile est pleine.\n");
@@ -57,8 +57,8 @@ void empiler(Pile *pile, char element) {
     }
 }
 
-char depiler(Pile *pile) {
-    if (!pileVide(pile)) {
+char depiler2(Pile2 *pile) {
+    if (!pileVide2(pile)) {
         return pile->items[pile->top--];
     } else {
         printf("Erreur : la pile est vide.\n");
@@ -66,8 +66,8 @@ char depiler(Pile *pile) {
     }
 }
 
-char sommetPile(Pile *pile) {
-    if (!pileVide(pile)) {
+char sommetPile2(Pile2 *pile) {
+    if (!pileVide2(pile)) {
         return pile->items[pile->top];
     } else {
         printf("Erreur : la pile est vide.\n");
@@ -98,40 +98,40 @@ int priorite(char c) {
 
 // Algorithme de transformation
 void transformerExpression(char *expression) {
-    Pile pileP, pileR;
+    Pile2 pileP, pileR;
     char x;
 
-    initPile(&pileP);
-    initPile(&pileR);
+    initPile2(&pileP);
+    initPile2(&pileR);
 
     for (int i = 0; expression[i] != '\0'; i++) {
         if (estOperande(expression[i])) {
-            empiler(&pileR, expression[i]);
+            empiler2(&pileR, expression[i]);
         } else if (expression[i] == '(') {
-            empiler(&pileP, expression[i]);
+            empiler2(&pileP, expression[i]);
         } else if (estOperateur(expression[i])) {
-            while (!pileVide(&pileP) && estOperateur(sommetPile(&pileP)) &&
-                   (priorite(expression[i]) <= priorite(sommetPile(&pileP)))) {
-                x = depiler(&pileP);
-                empiler(&pileR, x);
+            while (!pileVide2(&pileP) && estOperateur(sommetPile2(&pileP)) &&
+                   (priorite(expression[i]) <= priorite(sommetPile2(&pileP)))) {
+                x = depiler2(&pileP);
+                empiler2(&pileR, x);
             }
-            empiler(&pileP, expression[i]);
+            empiler2(&pileP, expression[i]);
         } else if (expression[i] == ')') {
-            while (!pileVide(&pileP) && sommetPile(&pileP) != '(') {
-                x = depiler(&pileP);
-                empiler(&pileR, x);
+            while (!pileVide2(&pileP) && sommetPile2(&pileP) != '(') {
+                x = depiler2(&pileP);
+                empiler2(&pileR, x);
             }
-            depiler(&pileP); // Dépiler la parenthèse ouvrante
+            depiler2(&pileP); // Dépiler la parenthèse ouvrante
         }
     }
 
-    while (!pileVide(&pileR)) {
-        x = depiler(&pileR);
-        empiler(&pileP, x);
+    while (!pileVide2(&pileR)) {
+        x = depiler2(&pileR);
+        empiler2(&pileP, x);
     }
 
-    while (!pileVide(&pileP)) {
-        x = depiler(&pileP);
+    while (!pileVide2(&pileP)) {
+        x = depiler2(&pileP);
         printf("%c ", x);
     }
 }
