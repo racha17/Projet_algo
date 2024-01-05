@@ -61,8 +61,8 @@ void DrawPile(Pile *pile, Pile *pile2)
         {
             val = depiler(pile2);
             empiler(&pile1, val);
-            DrawRectangleRec((Rectangle){700, yOffset, 180, 60}, RED);
-            DrawText(TextFormat("%d", val), 720, yOffset + 2, 20, WHITE);
+            DrawRectangleRec((Rectangle){700, yOffset, 180, 60}, YELLOW);
+            DrawText(TextFormat("%d", val), 720, yOffset + 4, 60, BEIGE);
             yOffset += 65;
         }
 
@@ -89,7 +89,8 @@ int main()
     int tosupress = -1;
     bool supAnimation = false;
 
-    char inputText[256] = "";
+    int stringSize = 256;
+    char *inputText = (char *)calloc(stringSize, sizeof(char));
 
     float animationProgress = 0.0f;
     float animationProgressThreshold = 0.5f;
@@ -123,7 +124,7 @@ int main()
 
                             printf("Valeur inseree %d\n", val);
                         }
-                        memset(inputText, 0, sizeof(inputText));
+                        inputText = (char *)calloc(stringSize, sizeof(char));
                     }
                     else if (i == 2 && tosupress == -1)
                     {
@@ -148,19 +149,6 @@ int main()
         Rectangle inputBox = {50, 300, 150, 30};
         DrawRectangleRec(inputBox, BROWN);
 
-        if (IsKeyPressed(KEY_ENTER))
-        {
-            char *endptr;
-            int val = (int)strtol(inputText, &endptr, 10);
-
-            if (*endptr == '\0')
-            {
-                empiler(&MaPile, val);
-
-                printf("val inserted: %d\n", val);
-            }
-            memset(inputText, 0, sizeof(inputText));
-        }
         if (IsKeyPressed(KEY_RIGHT) && (tosupress != -1) && !supAnimation)
         {
             int x;
@@ -204,7 +192,7 @@ int main()
             {
 
                 DrawRectangleRec((Rectangle){500, 200 - 1000 * animationProgress, 180, 60}, RED);
-                DrawText(TextFormat("%d", tosupress), 520, 202 - 1000 * animationProgress, 50, BEIGE);
+                DrawText(TextFormat("%d", tosupress), 520, 202 - 1000 * animationProgress, 50, BLACK);
 
                 animationProgress += 0.001f;
             }
@@ -214,15 +202,18 @@ int main()
                 supressed = true;
             }
         }
-
         int key = GetKeyPressed();
-        if (key != 0)
+        if ((key >= 48 && key <= 57) || (key == 259 || key == 261))
         {
             int length = strlen(inputText);
             if (length < sizeof(inputText) - 1)
             {
                 inputText[length] = (char)key;
                 inputText[length + 1] = '\0';
+            }
+            if (length - 1 && (key == 259 || key == 261))
+            {
+                inputText[length - 1] = '\0';
             }
         }
 
