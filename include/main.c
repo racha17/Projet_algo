@@ -6,13 +6,11 @@
 #include "structure.h"
 #include "F_predefinies.h"
 #include "Fonctions.h"
-
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 800
-#define MAX_BUTTONS 3
-#define BUTTON_WIDTH 200
+#define MAX_BUTTONS 5
+#define BUTTON_WIDTH 300
 #define BUTTON_HEIGHT 50
-
 typedef struct Button
 {
     Rectangle rect;
@@ -71,6 +69,17 @@ void DrawPile(Pile *pile, Pile *pile2, bool drawPilevide)
         {
             empiler(pile2, depiler(&pile1));
         }
+    }
+}
+void DrawRecherche(int trouve)
+{
+    if (trouve == 1)
+    {
+        DrawText("la valeur a ete trouve ", 900, 200, 20, WHITE);
+    }
+    else if (trouve == 2)
+    {
+        DrawText("la valeur n'a pas ete trouve ", 890, 200, 20, WHITE);
     }
 }
 
@@ -139,14 +148,18 @@ else printf("la valeur existe . \n");
     Button buttons[MAX_BUTTONS] = {
         {{50, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "create", false},
         {{50, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "insert", false},
-        {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "remove", false}};
+        {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "remove", false},
+        {{50, 260, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "search", false},
+        {{50, 330, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Transformation algorithm", false}};
 
     Pile MaPile = initPile();
 
     Pile pile2 = initPile();
 
     bool drawPilevide = false;
+    int trouve = 0;
 
+     bool showExplanation = false;
     char inputText[256] = "";
 
     while (!WindowShouldClose())
@@ -200,6 +213,29 @@ else printf("la valeur existe . \n");
                         }
 
                         memset(inputText, 0, sizeof(inputText));
+                    } else if (i == 3)
+                    {
+                        char *endptr;
+                        int val = (int)strtol(inputText, &endptr, 10);
+
+                        if (*endptr == '\0')
+                        {
+                            if (recherche(&MaPile, val))
+                            {
+                                printf("La valeur %d a été trouvée dans la pile.\n", val);
+                                trouve = 1;
+                            }
+                            else
+                            {
+                                printf("La valeur %d n'existe pas dans la pile.\n", val);
+                                trouve = 2;
+                            }
+                        }
+
+                        memset(inputText, 0, sizeof(inputText));
+                    } else if (i==4) {
+                      
+                         showExplanation = true;
                     }
                 }
             }
@@ -214,10 +250,10 @@ else printf("la valeur existe . \n");
             DrawText(buttons[i].text, buttons[i].rect.x + 10, buttons[i].rect.y + 10, 20, BLACK);
         }
 
-        Rectangle inputBox = {50, 300, 150, 30};
+        Rectangle inputBox = {50, 400, 150, 30};
         DrawRectangleRec(inputBox, BROWN);
 
-        if (IsKeyPressed(KEY_ENTER))
+    /*    if (IsKeyPressed(KEY_ENTER))
         {
             char *endptr;
             int val = (int)strtol(inputText, &endptr, 10);
@@ -229,7 +265,7 @@ else printf("la valeur existe . \n");
                 printf("val inserted: %d\n", val);
             }
             memset(inputText, 0, sizeof(inputText));
-        }
+        }*/
 
         int key = GetKeyPressed();
         if (key != 0)
@@ -246,8 +282,30 @@ else printf("la valeur existe . \n");
         ClearBackground(BEIGE);
 
         DrawText(inputText, inputBox.x + 5, inputBox.y + 5, 20, BEIGE);
-
+        
         DrawPile(&MaPile, &pile2, drawPilevide);
+
+         DrawRecherche(trouve);
+if (showExplanation)
+{
+    
+   {
+            DrawText("Une utilisation courante des piles est l'elaboration par le compilateur\n"
+                     "d'une forme intermediaire de l'expression a evaluer.\n"
+                     "Apres l'analyse lexicale et syntaxique, l'expression est traduite en\n"
+                     "une forme intermediaire plus facilement evaluable.\n"
+                     "Soit l'expression : A + B. Son evaluation ne peut etre faite\n"
+                     "immediatement lors de la rencontre d'un operateur car le 2eme\n"
+                     "operande n'est pas encore connu par la machine. Par contre si\n"
+                     "l'expression pouvait etre ecrite sous la forme AB+ alors elle serait\n"
+                     "directement evaluable car les deux operandes sont connus avant\n"
+                     "l'operateur.\n"
+                     "La notation < Operande> < Operateur> < Operande> est dite\n"
+                     "INFIXE.\n"
+                     "L'autre representation plus facilement evaluable est dite POSTFIXE\n"
+                     "ou POLONAISE SUFFIXE. Elle a la forme :\n"
+                     "< Operande Gauche > < Operande Droit > < Operateur>", 400, 100, 18, WHITE);
+        }}
 
         EndDrawing();
     }
