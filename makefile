@@ -2,7 +2,7 @@
 CC = gcc
 
 # Set compiler flags
-CFLAGS = -O1 -Wall -std=c99 -Wno-missing-braces
+CFLAGS = -O1 -Wall -std=c99 -Wno-missing-braces -I./resources
 
 # Set library paths
 LIBDIR = lib/
