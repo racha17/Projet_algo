@@ -86,61 +86,6 @@ int main()
 {
 
     // Initialiser la fenêtre
-    // Pile Mapile = initPile();
-    //  int N, val , valeur , val2;
-    //    char choix;
-    // printf("entrez le max de valeurs que peut contenir la pile:\n");
-    // scanf("%d", &N);
-
-    // for (int i = 0; i < N; i++)
-    // {
-    //     scanf("%d", &val);
-    //     empiler(&Mapile, val);
-    // }
-    // printf("les valeurs de la pile sont:\n");
-    // afficher(&Mapile);
-
-    // printf("donnez la valeur que vous voulez supprimer:\n");
-    // scanf("%d", &val);
-    // suppression(&Mapile, val);
-    // printf("l'etat de la pile apres suppression:\n");
-    // afficher(&Mapile);
-
-    //       // test INSERTION
-    //     printf ("voulez-vous entrer une valeur O/N ?:\n");
-    //     scanf ("%c",&choix);
-    //     if (choix=='O'||choix=='o'){
-    //         /*demander à l'utilisateur d'entrer une valeur*/
-    //     printf ("donnez une valeur à ajouter:\n");
-    //     scanf ("%d",&valeur);
-    //     } else {
-    //         /*choisir une valeur aléatoire*/
-
-    //         valeur = rand() %100; /*valeurs entre 0 et 99*/
-    //     }
-    //     /*inserer la valeur dans la pile*/
-    //     insertion(&Mapile,valeur);
-    //     /*affichage*/
-    //     printf ("Etat de la pile aprés insertion :\n");
-    //     afficherPile(&Mapile);
-    /* printf("veuillez donner la valeur que vous voulez rechercher ");
-scanf("%d",&val2);
-
-if (recherche(&Mapile,val2)==false)
-{
-    printf("la valeur n'existe pas. \n ");
-
-}
-else printf("la valeur existe . \n");
-
-
-     */
-
-    //   return 0;
-
-    //}
-
-    // Initialiser la fenêtre
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Project");
 
     Button buttons[MAX_BUTTONS] = {
@@ -267,7 +212,7 @@ else printf("la valeur existe . \n");
         DrawRectangleRec(inputBox, BROWN);
 
         if (IsKeyPressed(KEY_RIGHT) && (tosupress != -1) && !supAnimation)
-            /*    if (IsKeyPressed(KEY_ENTER))
+              if (IsKeyPressed(KEY_ENTER))
                 {
                     int x;
                     if (!supressed)
@@ -307,8 +252,8 @@ else printf("la valeur existe . \n");
                 {
                     DrawText("Oops  ! la valeur n'existe pas dans la pile.\n\nEntrez une autre valeur!", 58, 500, 20, BROWN);
                 }
-                    memset(inputText, 0, sizeof(inputText));
-                }*/
+                   
+                
 
             if (supAnimation)
             {
