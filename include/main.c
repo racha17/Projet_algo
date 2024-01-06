@@ -6,13 +6,11 @@
 #include "structure.h"
 #include "F_predefinies.h"
 #include "Fonctions.h"
-
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 800
-#define MAX_BUTTONS 3
-#define BUTTON_WIDTH 200
+#define MAX_BUTTONS 5
+#define BUTTON_WIDTH 300
 #define BUTTON_HEIGHT 50
-
 typedef struct Button
 {
     Rectangle rect;
@@ -72,15 +70,85 @@ void DrawPile(Pile *pile, Pile *pile2)
         }
     }
 }
+void DrawRecherche(int trouve)
+{
+    if (trouve == 1)
+    {
+        DrawText("la valeur a ete trouve ", 900, 200, 20, WHITE);
+    }
+    else if (trouve == 2)
+    {
+        DrawText("la valeur n'a pas ete trouve ", 890, 200, 20, WHITE);
+    }
+}
 
 int main()
 {
+
+    // Initialiser la fenêtre
+    // Pile Mapile = initPile();
+    //  int N, val , valeur , val2;
+    //    char choix;
+    // printf("entrez le max de valeurs que peut contenir la pile:\n");
+    // scanf("%d", &N);
+
+    // for (int i = 0; i < N; i++)
+    // {
+    //     scanf("%d", &val);
+    //     empiler(&Mapile, val);
+    // }
+    // printf("les valeurs de la pile sont:\n");
+    // afficher(&Mapile);
+
+    // printf("donnez la valeur que vous voulez supprimer:\n");
+    // scanf("%d", &val);
+    // suppression(&Mapile, val);
+    // printf("l'etat de la pile apres suppression:\n");
+    // afficher(&Mapile);
+
+    //       // test INSERTION
+    //     printf ("voulez-vous entrer une valeur O/N ?:\n");
+    //     scanf ("%c",&choix);
+    //     if (choix=='O'||choix=='o'){
+    //         /*demander à l'utilisateur d'entrer une valeur*/
+    //     printf ("donnez une valeur à ajouter:\n");
+    //     scanf ("%d",&valeur);
+    //     } else {
+    //         /*choisir une valeur aléatoire*/
+
+    //         valeur = rand() %100; /*valeurs entre 0 et 99*/
+    //     }
+    //     /*inserer la valeur dans la pile*/
+    //     insertion(&Mapile,valeur);
+    //     /*affichage*/
+    //     printf ("Etat de la pile aprés insertion :\n");
+    //     afficherPile(&Mapile);
+    /* printf("veuillez donner la valeur que vous voulez rechercher ");
+scanf("%d",&val2);
+
+if (recherche(&Mapile,val2)==false)
+{
+    printf("la valeur n'existe pas. \n ");
+
+}
+else printf("la valeur existe . \n");
+
+
+     */
+
+    //   return 0;
+
+    //}
+
+    // Initialiser la fenêtre
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Project");
 
     Button buttons[MAX_BUTTONS] = {
         {{50, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "create", false},
         {{50, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "insert", false},
-        {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "remove", false}};
+        {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "remove", false},
+        {{50, 260, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "search", false},
+        {{50, 330, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Transformation algorithm", false}};
 
     Pile MaPile = initPile();
     Pile pile2 = initPile();
@@ -94,6 +162,11 @@ int main()
 
     float animationProgress = 0.0f;
     float animationProgressThreshold = 0.5f;
+    bool drawPilevide = false;
+    int trouve = 0;
+
+    bool showExplanation = false;
+    char inputText[256] = "";
 
     while (!WindowShouldClose())
     {
@@ -132,6 +205,48 @@ int main()
                         char *endptr;
                         tosupress = (int)strtol(inputText, &endptr, 10);
                         animationProgress = 0.0f;
+                        int val = (int)strtol(inputText, &endptr, 10);
+                        if (*endptr == '\0')
+                        {
+                            if (suppression(&MaPile, val))
+                            {
+                                empiler(&pile2, val);
+                                drawPilevide = false;
+                                printf("Valeur supprimee: %d\n", val);
+                            }
+                            else
+                            {
+                                printf("la valeur %d n'existe pas dans la pile.\n", val);
+                            }
+                        }
+
+                        memset(inputText, 0, sizeof(inputText));
+                    }
+                    else if (i == 3)
+                    {
+                        char *endptr;
+                        int val = (int)strtol(inputText, &endptr, 10);
+
+                        if (*endptr == '\0')
+                        {
+                            if (recherche(&MaPile, val))
+                            {
+                                printf("La valeur %d a été trouvée dans la pile.\n", val);
+                                trouve = 1;
+                            }
+                            else
+                            {
+                                printf("La valeur %d n'existe pas dans la pile.\n", val);
+                                trouve = 2;
+                            }
+                        }
+
+                        memset(inputText, 0, sizeof(inputText));
+                    }
+                    else if (i == 4)
+                    {
+
+                        showExplanation = true;
                     }
                 }
             }
@@ -148,67 +263,70 @@ int main()
             DrawText("Press Right Key to Suppress:", 58, 400, 20, BROWN);
         }
 
-        Rectangle inputBox = {50, 300, 150, 30};
+        Rectangle inputBox = {50, 400, 150, 30};
         DrawRectangleRec(inputBox, BROWN);
 
         if (IsKeyPressed(KEY_RIGHT) && (tosupress != -1) && !supAnimation)
-        {
-            int x;
-            if (!supressed)
-            {
-                if (!Pilevide(&MaPile))
+            /*    if (IsKeyPressed(KEY_ENTER))
                 {
-                    x = depiler(&MaPile);
-                    if (x != tosupress)
+                    int x;
+                    if (!supressed)
                     {
-                        empiler(&pile2, x);
+                        if (!Pilevide(&MaPile))
+                        {
+                            x = depiler(&MaPile);
+                            if (x != tosupress)
+                            {
+                                empiler(&pile2, x);
+                            }
+                            else
+                            {
+                                supAnimation = true;
+                            }
+                        }
+                        else
+                        {
+                            supressed = true;
+                        }
                     }
                     else
                     {
-                        supAnimation = true;
+                        if (!Pilevide(&pile2))
+                        {
+                            x = depiler(&pile2);
+                            empiler(&MaPile, x);
+                        }
+                        else
+                        {
+                            tosupress = -1;
+                            // supressed = true;
+                        }
                     }
+                }
+                if (Pilevide(&MaPile) && supressed == false)
+                {
+                    DrawText("Oops  ! la valeur n'existe pas dans la pile.\n\nEntrez une autre valeur!", 58, 500, 20, BROWN);
+                }
+                    memset(inputText, 0, sizeof(inputText));
+                }*/
+
+            if (supAnimation)
+            {
+
+                if (animationProgress >= 0.0f && animationProgress <= animationProgressThreshold)
+                {
+
+                    DrawRectangleRec((Rectangle){500, 200 - 1000 * animationProgress, 180, 60}, RED);
+                    DrawText(TextFormat("%d", tosupress), 520, 202 - 1000 * animationProgress, 50, BLACK);
+
+                    animationProgress += 0.001f;
                 }
                 else
                 {
+                    supAnimation = false;
                     supressed = true;
                 }
             }
-            else
-            {
-                if (!Pilevide(&pile2))
-                {
-                    x = depiler(&pile2);
-                    empiler(&MaPile, x);
-                }
-                else
-                {
-                    tosupress = -1;
-                    // supressed = true;
-                }
-            }
-        }
-        if (Pilevide(&MaPile) && supressed == false)
-        {
-            DrawText("Oops  ! la valeur n'existe pas dans la pile.\n\nEntrez une autre valeur!", 58, 500, 20, BROWN);
-        }
-
-        if (supAnimation)
-        {
-
-            if (animationProgress >= 0.0f && animationProgress <= animationProgressThreshold)
-            {
-
-                DrawRectangleRec((Rectangle){500, 200 - 1000 * animationProgress, 180, 60}, RED);
-                DrawText(TextFormat("%d", tosupress), 520, 202 - 1000 * animationProgress, 50, BLACK);
-
-                animationProgress += 0.001f;
-            }
-            else
-            {
-                supAnimation = false;
-                supressed = true;
-            }
-        }
         int key = GetKeyPressed();
         if ((key >= 48 && key <= 57) || (key == 259 || key == 261))
         {
@@ -230,6 +348,32 @@ int main()
         DrawText(inputText, inputBox.x + 5, inputBox.y + 5, 20, BEIGE);
 
         DrawPile(&MaPile, &pile2);
+
+        DrawPile(&MaPile, &pile2, drawPilevide);
+
+        DrawRecherche(trouve);
+        if (showExplanation)
+        {
+
+            {
+                DrawText("Une utilisation courante des piles est l'elaboration par le compilateur\n"
+                         "d'une forme intermediaire de l'expression a evaluer.\n"
+                         "Apres l'analyse lexicale et syntaxique, l'expression est traduite en\n"
+                         "une forme intermediaire plus facilement evaluable.\n"
+                         "Soit l'expression : A + B. Son evaluation ne peut etre faite\n"
+                         "immediatement lors de la rencontre d'un operateur car le 2eme\n"
+                         "operande n'est pas encore connu par la machine. Par contre si\n"
+                         "l'expression pouvait etre ecrite sous la forme AB+ alors elle serait\n"
+                         "directement evaluable car les deux operandes sont connus avant\n"
+                         "l'operateur.\n"
+                         "La notation < Operande> < Operateur> < Operande> est dite\n"
+                         "INFIXE.\n"
+                         "L'autre representation plus facilement evaluable est dite POSTFIXE\n"
+                         "ou POLONAISE SUFFIXE. Elle a la forme :\n"
+                         "< Operande Gauche > < Operande Droit > < Operateur>",
+                         400, 100, 18, WHITE);
+            }
+        }
 
         EndDrawing();
     }
