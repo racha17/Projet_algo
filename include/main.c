@@ -140,10 +140,12 @@ int main()
                 buttons[i].color = DARKBROWN;
                 buttons[i].pressed = false;
             }
-
-            // Draw the button
             DrawRectangleRec(buttons[i].rect, buttons[i].color);
             DrawText(buttons[i].text, buttons[i].rect.x + 10, buttons[i].rect.y + 10, 20, BLACK);
+        }
+        if (buttons[2].pressed)
+        {
+            DrawText("Press Right Key to Suppress:", 58, 400, 20, BROWN);
         }
 
         Rectangle inputBox = {50, 300, 150, 30};
@@ -185,6 +187,11 @@ int main()
                 }
             }
         }
+        if (Pilevide(&MaPile) && supressed == false)
+        {
+            DrawText("Oops  ! la valeur n'existe pas dans la pile.\n\nEntrez une autre valeur!", 58, 500, 20, BROWN);
+        }
+
         if (supAnimation)
         {
 
@@ -211,7 +218,7 @@ int main()
                 inputText[length] = (char)key;
                 inputText[length + 1] = '\0';
             }
-            if (length - 1 && (key == 259 || key == 261))
+            if (length > 0 && (key == 259 || key == 261))
             {
                 inputText[length - 1] = '\0';
             }
