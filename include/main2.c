@@ -9,7 +9,7 @@
 int main{
   // Initialiser la fenêtre
     // Pile Mapile = initPile();
-    //  int N, val , valeur , val2;
+    //  int k, N, val , valeur , val2;
     //    char choix;
     // printf("entrez le max de valeurs que peut contenir la pile:\n");
     // scanf("%d", &N);
@@ -29,22 +29,29 @@ int main{
     // afficher(&Mapile);
 
     //       // test INSERTION
-    //     printf ("voulez-vous entrer une valeur O/N ?:\n");
-    //     scanf ("%c",&choix);
-    //     if (choix=='O'||choix=='o'){
-    //         /*demander à l'utilisateur d'entrer une valeur*/
-    //     printf ("donnez une valeur à ajouter:\n");
-    //     scanf ("%d",&valeur);
-    //     } else {
-    //         /*choisir une valeur aléatoire*/
+    //      printf ("voulez-vous entrer une valeur O/N ?:\n");
+    //  scanf ("%c",&choix);
+    // if (choix=='O'||choix=='o'){
+   //    /*demander à l'utilisateur d'entrer une valeur et la position*/
+   //  printf ("donnez une valeur à ajouter:\n");
+   // scanf ("%d",&valeur);
+   // printf ("donnez une position");
+   // scanf ("%d",&k);
+   //  } else {
+        /*choisir une valeur aléatoire et une position aléatoire*/
+        
+   //     valeur = rand() %100; /*valeurs entre 0 et 99*/
+   //     k = rand() %100;
+   //   }
 
-    //         valeur = rand() %100; /*valeurs entre 0 et 99*/
-    //     }
-    //     /*inserer la valeur dans la pile*/
-    //     insertion(&Mapile,valeur);
-    //     /*affichage*/
-    //     printf ("Etat de la pile aprés insertion :\n");
-    //     afficherPile(&Mapile);
+ //   /*inserer la valeur dans la pile*/
+ //    insertion(&mapile,valeur,k);
+ //   /*affichage*/
+ //   printf ("Etat de la pile aprés insertion :\n");
+ //   afficherPile(&mapile);
+
+
+
     /* printf("veuillez donner la valeur que vous voulez rechercher ");
 scanf("%d",&val2);
 
