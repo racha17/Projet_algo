@@ -18,6 +18,6 @@ void empiler(Pile *pile, char element);
 int pilePleine(Pile *pile);
 int pileVide(Pile *pile);
 void initPile(Pile *pile) ;
-
+void depiler2(Pile *pile,int x);
 
 #endif // F_PREDEFINIES_H_INCLUDED
