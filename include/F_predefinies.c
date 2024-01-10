@@ -56,3 +56,20 @@ int depiler(Pile *pile)
     }
     return nbrdepile;
 }
+void depiler2(Pile *pile,int x)
+{
+    
+    list *L = pile->first;
+    if (Pilevide(pile))
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    if (L != NULL)
+    {
+        x = L->nbr;
+        pile->first = L->svt;
+        free(L);
+    }
+    
+}
