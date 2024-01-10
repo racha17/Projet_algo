@@ -75,7 +75,7 @@ void insertion (Pile *pile,int val,int k)
     }
     if (k==1){
         empiler(&pile,val);
-    }
+    }else, { printf ("erreur!!!");}
     while (!Pilevide(&pile)){
             depiler2 (&R,x);
             empiler (&pile,x);
