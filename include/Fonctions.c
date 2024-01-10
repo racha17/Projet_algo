@@ -55,10 +55,32 @@ bool suppression(Pile *pile, int val)
     return trouve;
 }
 
-void insertion(Pile *pile, int val)
-{
-    empiler(pile, val);
-}
+void insertion (Pile *pile,int val,int k)
+{    Pile R;
+    int x;
+    if (Pilevide(&pile)){
+    empiler (&pile,val);
+    }
+    else if (k==1){
+    empiler(&pile,val);
+    }
+
+    else {
+        initPile(&R);
+        while (!Pilevide(&pile) && k>1){
+            depiler2(&pile,x);
+            empiler(&R,x);
+            k=k-1;
+        }
+    }
+    if (k==1){
+        empiler(&pile,val);
+    }
+    while (!Pilevide(&pile)){
+            depiler2 (&R,x);
+            empiler (&pile,x);
+        }
+ }
 bool recherche(Pile *pile, int val)
 {
     bool trouve;
