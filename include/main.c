@@ -226,12 +226,12 @@ int main()
                         if (i == 0)
                         {
                             // Handle "Enter Value" button press
-                            insertionValue = GetInputValue(); // Implement this function to get user input
+                            insertionValue = GetInputValue();
                         }
                         else if (i == 1)
                         {
                             // Handle "Enter Position" button press
-                            insertionPosition = GetInputPosition(); // Implement this function to get user input
+                            insertionPosition = GetInputPosition();
                         }
                         else if (i == 2)
                         {
