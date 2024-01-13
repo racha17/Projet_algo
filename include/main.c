@@ -234,6 +234,8 @@ int main()
 
         EndDrawing();
     }
+
     CloseWindow();
+    free(inputText);
     return 0;
 }
