@@ -67,7 +67,71 @@ void DrawPile(Pile *pile, Pile *pile2)
         }
     }
 }
+//*********************************************************************
+typedef struct InsertionButton
+{
+    Rectangle rect;
+    Color color;
+    const char *text;
+    bool pressed;
+} InsertionButton;
 
+void DrawInsertionButtons(InsertionButton *insertionButtons, int numButtons)
+{
+    for (int i = 0; i < numButtons; i++)
+    {
+        DrawRectangleRec(insertionButtons[i].rect, insertionButtons[i].color);
+        DrawText(insertionButtons[i].text, insertionButtons[i].rect.x + 10, insertionButtons[i].rect.y + 10, 20, BLACK);
+    }
+}
+void HandleInsertion(Pile *pile, int val, int k)
+{
+     Pile R;
+    int x;
+
+    if (Pilevide(pile) || k <= 0)
+    {
+        empiler(pile, val);
+        return;
+    }
+
+    initPile(&R);
+    while (!Pilevide(pile) && k > 1)
+    {
+        depiler2(pile, &x);
+        empiler(&R, x);
+        k = k - 1;
+    }
+
+    if (k == 1)
+    {
+        empiler(pile, val);
+    }
+    else
+    {
+        printf("Erreur!!!\n");
+    }
+
+    while (!Pilevide(&R))
+    {
+        depiler2(&R, &x);
+        empiler(pile, x);
+    }
+}
+int GetInputPosition()
+{
+    int position;
+    printf("Enter position: ");
+    scanf("%d", &position);
+    return position;
+}
+int GetInputValue()
+{
+    int value;
+    printf("Enter value: ");
+    scanf("%d", &value);
+    return value;
+}
 int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Project");
@@ -76,10 +140,26 @@ int main()
         {{50, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "insert", false},
         {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "remove", false},
     };
+//****************************************************************************************
+    InsertionButton insertionButtons[] = {
+        {{200, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Enter Value", false},
+        {{200, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Enter Position", false},
+        {{200, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Perform Insertion", false},
+    };
+//***************************************************************************************
+    
 
     Pile MaPile = initPile();
     Pile pile2 = initPile();
+//*****************************************************************************************
+     int GetInputPosition();
+    int GetInputValue();
 
+    int insertionValue = 0;
+    int insertionPosition = 0;
+    bool showInsertionButtons = false;
+
+//*****************************************************************************************
     bool supressed = true;
 
     int tosupress = -1;
@@ -124,6 +204,44 @@ int main()
                         tosupress = (int)strtol(inputText, &endptr, 10);
                         animationProgress = 0.0f;
                     }
+        //*********************************************************************************************
+                    else if (i==3)
+                    {
+                       showInsertionButtons = !showInsertionButtons;
+                    }
+                    if (showInsertionButtons)
+        {
+            DrawInsertionButtons(insertionButtons, sizeof(insertionButtons) / sizeof(insertionButtons[0]));
+
+            for (int i = 0; i < sizeof(insertionButtons) / sizeof(insertionButtons[0]); i++)
+            {
+                if (CheckCollisionPointRec(GetMousePosition(), insertionButtons[i].rect))
+                {
+                    insertionButtons[i].color = BROWN;
+
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                    {
+                        insertionButtons[i].pressed = true;
+
+                        if (i == 0)
+                        {
+                            // Handle "Enter Value" button press
+                            insertionValue = GetInputValue();
+                        }
+                        else if (i == 1)
+                        {
+                            // Handle "Enter Position" button press
+                            insertionPosition = GetInputPosition();
+                        }
+                        else if (i == 2)
+                        {
+                            // Handle "Perform Insertion" button press
+                            HandleInsertion(&MaPile, insertionValue, insertionPosition);
+                            showInsertionButtons = false; // Hide insertion buttons after performing insertion
+                        }
+                    }
+                }
+        //***********************************************************************************************            
                 }
             }
             else
