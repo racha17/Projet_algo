@@ -8,8 +8,8 @@
 #include "Fonctions.h"
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 800
-#define MAX_BUTTONS 4
-#define BUTTON_WIDTH 200
+#define MAX_BUTTONS 6
+#define BUTTON_WIDTH 280
 #define BUTTON_HEIGHT 50
 
 typedef struct Button
@@ -86,6 +86,59 @@ int LongueurPile(Pile *pile)
     }
     return longueur;
 }
+void DrawPileRECHERCHE(Pile *pile, Pile *pile2, bool drawPilevide, int valeurRecherchee, int trouve)
+{
+    int yOffset;
+
+    // Draw the first pile
+    if (Pilevide(pile))
+    {
+        DrawRectangleLinesEx((Rectangle){500, 500, 150, 70}, 2, DARKGRAY);
+    }
+    else
+    {
+        yOffset = 200;
+        int val;
+        Pile pile1 = initPile();
+
+        while (!Pilevide(pile))
+        {
+            val = depiler(pile);
+            empiler(&pile1, val);
+
+            // Nouvelle logique pour la couleur de fond pendant la recherche
+            if (trouve == 1 && val == valeurRecherchee)
+            {
+                DrawRectangleRec((Rectangle){500, yOffset, 180, 60}, GREEN);
+                
+            }
+            else
+            {
+                DrawRectangleRec((Rectangle){500, yOffset, 180, 60}, RED);
+            }
+
+            DrawText(TextFormat("%d", val), 520, yOffset + 2, 50, BEIGE);
+            yOffset += 65;
+        }
+
+        while (!Pilevide(&pile1))
+        {
+            empiler(pile, depiler(&pile1));
+        }
+    }
+}
+void DrawRecherche(int trouve)
+{
+    if (trouve == 1)
+    {
+        DrawText("la valeur a été trouvée ", 900, 200, 20, WHITE);
+    }
+    else if (trouve == 2)
+    {
+        DrawText("la valeur n'a pas été trouvée ", 890, 200, 20, WHITE);
+    }
+}
+
 
 int main()
 {
