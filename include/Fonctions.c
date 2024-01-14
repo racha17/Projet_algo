@@ -54,32 +54,31 @@ bool suppression(Pile *pile, int val)
     }
     return trouve;
 }
-void insertion (Pile *pile,int val,int k)
-{    Pile R;
+void insertion(Pile *pile, int val, int Pos)
+{
+    Pile R;
     int x;
-    if (Pilevide(&pile)){
-    empiler (&pile,val);
+    if (Pilevide(pile))
+    {
+        empiler(pile, val);
     }
-    else if (k==1){
-    empiler(&pile,val);
+    else
+    {
+        initPile(&R);
+        while (!Pilevide(pile) && Pos > 1)
+        {
+            x = depiler(pile);
+            empiler(&R, x);
+            Pos = Pos - 1;
+        }
     }
 
-    else {
-        initPile(&R);
-        while (!Pilevide(&pile) && k>1){
-            depiler2(&pile,x);
-            empiler(&R,x);
-            k=k-1;
-        }
+    while (!Pilevide(pile))
+    {
+        x = depiler(&R);
+        empiler(pile, x);
     }
-    if (k==1){
-        empiler(&pile,val);
-    }else, { printf ("erreur!!!");}
-    while (!Pilevide(&pile)){
-            depiler2 (&R,x);
-            empiler (&pile,x);
-        }
- }
+}
 bool recherche(Pile *pile, int val)
 {
     bool trouve;
@@ -104,55 +103,55 @@ bool recherche(Pile *pile, int val)
 
     return trouve;
 }
-// Algorithme de transformation
-void transformerExpression(char *expression)
-{
-    Pile pileP, pileR;
-    char x;
+// // Algorithme de transformation
+// void transformerExpression(char *expression)
+// {
+//     Pile pileP, pileR;
+//     char x;
 
-    initPile(&pileP);
-    initPile(&pileR);
+//     initPile(&pileP);
+//     initPile(&pileR);
 
-    for (int i = 0; expression[i] != '\0'; i++)
-    {
-        if (estOperande(expression[i]))
-        {
-            empiler(&pileR, expression[i]);
-        }
-        else if (expression[i] == '(')
-        {
-            empiler(&pileP, expression[i]);
-        }
-        else if (estOperateur(expression[i]))
-        {
-            while (!pileVide(&pileP) && estOperateur(sommetPile(&pileP)) &&
-                   (priorite(expression[i]) <= priorite(sommetPile(&pileP))))
-            {
-                x = depiler(&pileP);
-                empiler(&pileR, x);
-            }
-            empiler(&pileP, expression[i]);
-        }
-        else if (expression[i] == ')')
-        {
-            while (!pileVide(&pileP) && sommetPile(&pileP) != '(')
-            {
-                x = depiler(&pileP);
-                empiler(&pileR, x);
-            }
-            depiler(&pileP); // Dépiler la parenthèse ouvrante
-        }
-    }
+//     for (int i = 0; expression[i] != '\0'; i++)
+//     {
+//         if (estOperande(expression[i]))
+//         {
+//             empiler(&pileR, expression[i]);
+//         }
+//         else if (expression[i] == '(')
+//         {
+//             empiler(&pileP, expression[i]);
+//         }
+//         else if (estOperateur(expression[i]))
+//         {
+//             while (!pileVide(&pileP) && estOperateur(sommetPile(&pileP)) &&
+//                    (priorite(expression[i]) <= priorite(sommetPile(&pileP))))
+//             {
+//                 x = depiler(&pileP);
+//                 empiler(&pileR, x);
+//             }
+//             empiler(&pileP, expression[i]);
+//         }
+//         else if (expression[i] == ')')
+//         {
+//             while (!pileVide(&pileP) && sommetPile(&pileP) != '(')
+//             {
+//                 x = depiler(&pileP);
+//                 empiler(&pileR, x);
+//             }
+//             depiler(&pileP); // Dépiler la parenthèse ouvrante
+//         }
+//     }
 
-    while (!pileVide(&pileR))
-    {
-        x = depiler(&pileR);
-        empiler(&pileP, x);
-    }
+//     while (!pileVide(&pileR))
+//     {
+//         x = depiler(&pileR);
+//         empiler(&pileP, x);
+//     }
 
-    while (!pileVide(&pileP))
-    {
-        x = depiler(&pileP);
-        printf("%c ", x);
-    }
-}
+//     while (!pileVide(&pileP))
+//     {
+//         x = depiler(&pileP);
+//         printf("%c ", x);
+//     }
+// }

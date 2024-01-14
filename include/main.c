@@ -67,101 +67,47 @@ void DrawPile(Pile *pile, Pile *pile2)
         }
     }
 }
-//*********************************************************************
-typedef struct InsertionButton
-{
-    Rectangle rect;
-    Color color;
-    const char *text;
-    bool pressed;
-} InsertionButton;
 
-void DrawInsertionButtons(InsertionButton *insertionButtons, int numButtons)
+int LongueurPile(Pile *pile)
 {
-    for (int i = 0; i < numButtons; i++)
-    {
-        DrawRectangleRec(insertionButtons[i].rect, insertionButtons[i].color);
-        DrawText(insertionButtons[i].text, insertionButtons[i].rect.x + 10, insertionButtons[i].rect.y + 10, 20, BLACK);
-    }
-}
-void HandleInsertion(Pile *pile, int val, int k)
-{
-     Pile R;
+    int longueur = 1;
     int x;
-
-    if (Pilevide(pile) || k <= 0)
+    Pile longPile = initPile();
+    while (!Pilevide(pile))
     {
-        empiler(pile, val);
-        return;
+        x = depiler(pile);
+        empiler(&longPile, x);
+        longueur = longueur + 1;
     }
-
-    initPile(&R);
-    while (!Pilevide(pile) && k > 1)
+    while (!Pilevide(&longPile))
     {
-        depiler2(pile, &x);
-        empiler(&R, x);
-        k = k - 1;
-    }
-
-    if (k == 1)
-    {
-        empiler(pile, val);
-    }
-    else
-    {
-        printf("Erreur!!!\n");
-    }
-
-    while (!Pilevide(&R))
-    {
-        depiler2(&R, &x);
+        x = depiler(&longPile);
         empiler(pile, x);
     }
+    return longueur;
 }
-int GetInputPosition()
-{
-    int position;
-    printf("Enter position: ");
-    scanf("%d", &position);
-    return position;
-}
-int GetInputValue()
-{
-    int value;
-    printf("Enter value: ");
-    scanf("%d", &value);
-    return value;
-}
+
 int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Project");
     Button buttons[MAX_BUTTONS] = {
-        {{50, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "create", false},
-        {{50, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "insert", false},
-        {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "remove", false},
-    };
-//****************************************************************************************
-    InsertionButton insertionButtons[] = {
-        {{200, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Enter Value", false},
-        {{200, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Enter Position", false},
-        {{200, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Perform Insertion", false},
-    };
-//***************************************************************************************
-    
+        {{50, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Create", false},
+        {{50, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "FillStack", false},
+        {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Remove", false},
+        {{50, 330, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "InsertElement", false}};
 
     Pile MaPile = initPile();
     Pile pile2 = initPile();
-//*****************************************************************************************
-     int GetInputPosition();
-    int GetInputValue();
 
     int insertionValue = 0;
-    int insertionPosition = 0;
-    bool showInsertionButtons = false;
+    int insertionPosition = -1;
 
-//*****************************************************************************************
+    int nbrpos = 0;
+
+    bool insertedvalue = false;
+    bool inserted = true;
+
     bool supressed = true;
-
     int tosupress = -1;
     bool supAnimation = false;
 
@@ -170,6 +116,7 @@ int main()
 
     float animationProgress = 0.0f;
     float animationProgressThreshold = 0.5f;
+
     while (!WindowShouldClose())
     {
         for (int i = 0; i < MAX_BUTTONS; i++)
@@ -180,6 +127,7 @@ int main()
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
                     buttons[i].pressed = true;
+
                     if (i == 0)
                     {
                         MaPile = initPile();
@@ -199,52 +147,33 @@ int main()
                     }
                     else if (i == 2 && tosupress == -1)
                     {
+
                         supressed = false;
                         char *endptr;
                         tosupress = (int)strtol(inputText, &endptr, 10);
                         animationProgress = 0.0f;
                     }
-        //*********************************************************************************************
-                    else if (i==3)
+                    else if (i == 3)
                     {
-                       showInsertionButtons = !showInsertionButtons;
-                    }
-                    if (showInsertionButtons)
-        {
-            DrawInsertionButtons(insertionButtons, sizeof(insertionButtons) / sizeof(insertionButtons[0]));
-
-            for (int i = 0; i < sizeof(insertionButtons) / sizeof(insertionButtons[0]); i++)
-            {
-                if (CheckCollisionPointRec(GetMousePosition(), insertionButtons[i].rect))
-                {
-                    insertionButtons[i].color = BROWN;
-
-                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-                    {
-                        insertionButtons[i].pressed = true;
-
-                        if (i == 0)
+                        inserted = false;
+                        char *endptr;
+                        if (insertionPosition == -1 && insertedvalue)
                         {
-                            // Handle "Enter Value" button press
-                            insertionValue = GetInputValue();
+                            insertionPosition = (int)strtol(inputText, &endptr, 10);
+                            printf("la position est :%d\n", insertionPosition);
+                            nbrpos = LongueurPile(&MaPile) - insertionPosition;
                         }
-                        else if (i == 1)
+
+                        if (!insertedvalue)
                         {
-                            // Handle "Enter Position" button press
-                            insertionPosition = GetInputPosition();
-                        }
-                        else if (i == 2)
-                        {
-                            // Handle "Perform Insertion" button press
-                            HandleInsertion(&MaPile, insertionValue, insertionPosition);
-                            showInsertionButtons = false; // Hide insertion buttons after performing insertion
+                            insertionValue = (int)strtol(inputText, &endptr, 10);
+                            printf("la valeur a inserer est:%d\n", insertionValue);
+                            insertedvalue = true;
                         }
                     }
-                }
-        //***********************************************************************************************            
                 }
             }
-            else
+
             {
                 buttons[i].color = DARKBROWN;
                 buttons[i].pressed = false;
@@ -254,49 +183,111 @@ int main()
             DrawText(buttons[i].text, buttons[i].rect.x + 10, buttons[i].rect.y + 10, 20, BLACK);
         }
 
-        Rectangle inputBox = {50, 350, 150, 30};
+        Rectangle inputBox = {50, 500, 150, 30};
         DrawRectangleRec(inputBox, BROWN);
 
-        if (buttons[2].pressed)
+        if (IsKeyPressed(KEY_RIGHT))
         {
-            DrawText("Press Right Key to Suppress:", 58, 400, 20, BROWN);
-        }
-        if (IsKeyPressed(KEY_RIGHT) && (tosupress != -1) && !supAnimation)
-        {
-            int x;
-            if (!supressed)
+            if ((tosupress != -1) && !supAnimation)
             {
-                if (!Pilevide(&MaPile))
+
+                int x;
+                if (!supressed)
                 {
-                    x = depiler(&MaPile);
-                    if (x != tosupress)
+                    if (!Pilevide(&MaPile))
                     {
-                        empiler(&pile2, x);
+                        x = depiler(&MaPile);
+                        if (x != tosupress)
+                        {
+                            empiler(&pile2, x);
+                        }
+                        else
+                        {
+                            supAnimation = true;
+                            printf("la valeur %d a ete supprimee.\n", tosupress);
+                        }
                     }
                     else
                     {
-                        supAnimation = true;
-                        printf("la valeur %d a ete supprimee.\n", tosupress);
+                        supressed = true;
                     }
                 }
                 else
                 {
-                    supressed = true;
+                    if (!Pilevide(&pile2))
+                    {
+                        x = depiler(&pile2);
+                        empiler(&MaPile, x);
+                    }
+                    else
+                    {
+                        tosupress = -1;
+                        // supressed = true;
+                    }
                 }
             }
-            else
+            else if (insertedvalue && insertionPosition != -1)
             {
-                if (!Pilevide(&pile2))
+
+                int x;
+                if (!inserted)
                 {
-                    x = depiler(&pile2);
-                    empiler(&MaPile, x);
+                    if (!Pilevide(&MaPile))
+                    {
+
+                        if (nbrpos != 0)
+                        {
+                            x = depiler(&MaPile);
+                            empiler(&pile2, x);
+                            nbrpos = nbrpos - 1;
+                        }
+                        else
+                        {
+                            empiler(&MaPile, insertionValue);
+                            inserted = true;
+                        }
+                    }
+                    else
+                    {
+                        if (nbrpos == 0)
+                        {
+                            empiler(&MaPile, insertionValue);
+                        }
+                        inserted = true;
+                    }
                 }
                 else
                 {
-                    tosupress = -1;
-                    // supressed = true;
+                    if (!Pilevide(&pile2))
+                    {
+                        x = depiler(&pile2);
+                        empiler(&MaPile, x);
+                    }
+                    if (Pilevide(&pile2))
+
+                    {
+                        insertionPosition = -1;
+                        insertedvalue = false;
+                    }
                 }
             }
+        }
+        if (insertionPosition == -1 && !inserted)
+        {
+            if (!insertedvalue)
+            {
+                DrawText("Entrez la valeur que vous voulez inserer:", 50, 600, 20, BROWN);
+            }
+            else
+            {
+
+                DrawText("A quelle position voulez vous l'inserer:", 50, 600, 20, BROWN);
+            }
+        }
+
+        if (!supressed && tosupress != -1)
+        {
+            DrawText("Press Right Key to Suppress:", 58, 400, 20, BROWN);
         }
 
         if (Pilevide(&MaPile))
@@ -307,7 +298,7 @@ int main()
             }
         }
 
-        if (supressed && !Pilevide(&pile2))
+        if (supressed && !Pilevide(&pile2) && insertionPosition == -1)
         {
             DrawText("YAY! Votre valeur a ete supprimee!", 58, 450, 20, BROWN);
         }
@@ -352,7 +343,6 @@ int main()
 
         EndDrawing();
     }
-
     CloseWindow();
     free(inputText);
     return 0;
