@@ -55,7 +55,7 @@ void DrawPile(Pile *pile, Pile *pile2)
             val = depiler(pile2);
             empiler(&pile1, val);
             DrawRectangleRec((Rectangle){700, yOffset, 180, 60}, PINK);
-            DrawText(TextFormat("%d", val), 720, yOffset + 4, 60, LIGHTGRAY);
+            DrawText(TextFormat("%d", val), 720, yOffset + 4, 60, SKYBLUE);
             yOffset += 65;
         }
 
