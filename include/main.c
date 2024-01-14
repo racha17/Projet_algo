@@ -26,7 +26,7 @@ void DrawPile(Pile *pile, Pile *pile2)
     // Draw the first pile
     if (Pilevide(pile))
     {
-        DrawRectangleLinesEx((Rectangle){500, 500, 150, 70}, 2, DARKGRAY);
+        DrawRectangleLinesEx((Rectangle){500, 500, 150, 70}, 2, DARKPURPLE);
     }
     else
     {
@@ -37,8 +37,8 @@ void DrawPile(Pile *pile, Pile *pile2)
         {
             val = depiler(pile);
             empiler(&pile1, val);
-            DrawRectangleRec((Rectangle){500, yOffset, 180, 60}, BROWN);
-            DrawText(TextFormat("%d", val), 520, yOffset + 2, 50, BEIGE);
+            DrawRectangleRec((Rectangle){500, yOffset, 180, 60},DARKPURPLE);
+            DrawText(TextFormat("%d", val), 520, yOffset + 2, 50, SKYBLUE);
             yOffset += 65;
         }
         while (!Pilevide(&pile1))
@@ -57,7 +57,7 @@ void DrawPile(Pile *pile, Pile *pile2)
             val = depiler(pile2);
             empiler(&pile1, val);
             DrawRectangleRec((Rectangle){700, yOffset, 180, 60}, YELLOW);
-            DrawText(TextFormat("%d", val), 720, yOffset + 4, 60, BEIGE);
+            DrawText(TextFormat("%d", val), 720, yOffset + 4, 60,LIGHTGRAY);
             yOffset += 65;
         }
 
@@ -143,11 +143,16 @@ void DrawRecherche(int trouve)
 int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Project");
+     InitAudioDevice();
+    Music music = LoadMusicStream("C:\\Users\\sanaa\\Desktop\\notepad\\projet algo\\include\\recherchevoice.mp3");
+    music.looping = false;
     Button buttons[MAX_BUTTONS] = {
-        {{50, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Create", false},
-        {{50, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "FillStack", false},
-        {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "Remove", false},
-        {{50, 330, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKBROWN, "InsertElement", false}};
+        {{50, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKPURPLE, "Create", false},
+        {{50, 120, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKPURPLE, "FillStack", false},
+        {{50, 190, BUTTON_WIDTH, BUTTON_HEIGHT},DARKPURPLE, "Remove", false},
+        {{50, 260, BUTTON_WIDTH, BUTTON_HEIGHT},DARKPURPLE, "InsertElement", false}};
+        {{50, 330, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKPURPLE , "search", false},
+        {{50, 400, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKPURPLE , "Transformation algorithm", false}};
 
     Pile MaPile = initPile();
     Pile pile2 = initPile();
@@ -169,14 +174,16 @@ int main()
 
     float animationProgress = 0.0f;
     float animationProgressThreshold = 0.5f;
-
+ int trouve=0;
+    bool showExplanation =false ;
+    int valeurRecherchee;
     while (!WindowShouldClose())
     {
         for (int i = 0; i < MAX_BUTTONS; i++)
         {
             if (CheckCollisionPointRec(GetMousePosition(), buttons[i].rect))
             {
-                buttons[i].color = BROWN;
+                buttons[i].color = SKYBLUE;
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
                     buttons[i].pressed = true;
@@ -224,11 +231,37 @@ int main()
                             insertedvalue = true;
                         }
                     }
+                     else if (i == 4)
+                    {
+                        char *endptr;
+                        int val = (int)strtol(inputText, &endptr, 10);
+                        valeurRecherchee =val;
+                        if (*endptr == '\0')
+                        {
+                            if (recherche(&MaPile, val))
+                            { 
+                                printf("La valeur %d a été trouvée dans la pile.\n", val);
+                                
+                                trouve = 1;
+                            }
+                            else
+                            {
+                                printf("La valeur %d n'existe pas dans la pile.\n", val);
+                                trouve = 2;
+                            }
+                        }
+
+                        inputText = (char *)calloc(stringSize, sizeof(char));
+                    }
+                    else if (i == 5)
+                    {
+                        showExplanation = true;
+                    }
                 }
             }
 
             {
-                buttons[i].color = DARKBROWN;
+                buttons[i].color = DARKPURPLE;
                 buttons[i].pressed = false;
             }
 
@@ -237,7 +270,7 @@ int main()
         }
 
         Rectangle inputBox = {50, 500, 150, 30};
-        DrawRectangleRec(inputBox, BROWN);
+        DrawRectangleRec(inputBox, DARKPURPLE);
 
         if (IsKeyPressed(KEY_RIGHT))
         {
@@ -329,31 +362,31 @@ int main()
         {
             if (!insertedvalue)
             {
-                DrawText("Entrez la valeur que vous voulez inserer:", 50, 600, 20, BROWN);
+                DrawText("Entrez la valeur que vous voulez inserer:", 50, 600, 20, BLACK);
             }
             else
             {
 
-                DrawText("A quelle position voulez vous l'inserer:", 50, 600, 20, BROWN);
+                DrawText("A quelle position voulez vous l'inserer:", 50, 600, 20,BLACK);
             }
         }
 
         if (!supressed && tosupress != -1)
         {
-            DrawText("Press Right Key to Suppress:", 58, 400, 20, BROWN);
+            DrawText("Press Right Key to Suppress:", 58, 400, 20, BLACK);
         }
 
         if (Pilevide(&MaPile))
         {
             if (!supressed)
             {
-                DrawText("Oops  ! la valeur n'existe pas dans la pile.\n\nEntrez une autre valeur!", 58, 550, 20, BROWN);
+                DrawText("Oops  ! la valeur n'existe pas dans la pile.\n\nEntrez une autre valeur!", 58, 550, 20, BLACK);
             }
         }
 
         if (supressed && !Pilevide(&pile2) && insertionPosition == -1)
         {
-            DrawText("YAY! Votre valeur a ete supprimee!", 58, 450, 20, BROWN);
+            DrawText("YAY! Votre valeur a ete supprimee!", 58, 450, 20, BLACK);
         }
 
         if (supAnimation)
@@ -390,12 +423,38 @@ int main()
         }
 
         BeginDrawing();
-        ClearBackground(BEIGE);
-        DrawText(inputText, inputBox.x + 5, inputBox.y + 5, 20, BEIGE);
+        ClearBackground(LIGHTGRAY);
+        DrawText(inputText, inputBox.x + 5, inputBox.y + 5, 20, SKYBLUE );
         DrawPile(&MaPile, &pile2);
-
+ DrawRecherche(trouve);
+if (trouve==1){
+    
+               DrawPileRECHERCHE(&MaPile, &pile2, true, valeurRecherchee, trouve);
+                UpdateMusicStream(music); 
+}
+        if (showExplanation)
+        {
+            DrawText("Une utilisation courante des piles est l'élaboration par le compilateur\n"
+                     "d'une forme intermédiaire de l'expression à évaluer.\n"
+                     "Après l'analyse lexicale et syntaxique, l'expression est traduite en\n"
+                     "une forme intermédiaire plus facilement évaluable.\n"
+                     "Soit l'expression : A + B. Son évaluation ne peut être faite\n"
+                     "immédiatement lors de la rencontre d'un opérateur car le 2ème\n"
+                     "opérande n'est pas encore connu par la machine. Par contre si\n"
+                     "l'expression pouvait être écrite sous la forme AB+ alors elle serait\n"
+                     "directement évaluable car les deux opérandes sont connus avant\n"
+                     "l'opérateur.\n"
+                     "La notation < Opérande> < Opérateur> < Opérande> est dite\n"
+                     "INFIXE.\n"
+                     "L'autre représentation plus facilement évaluable est dite POSTFIXE\n"
+                     "ou POLONAISE SUFFIXE. Elle a la forme :\n"
+                     "< Opérande Gauche > < Opérande Droit > < Opérateur>",
+                     400, 500, 18, DARKPURPLE);
+        }
         EndDrawing();
-    }
+    }   UnloadMusicStream(music);         // Unload music stream buffers from RAM
+
+    CloseAudioDevice();     // Close audio device (music streaming is automatically stopped)
     CloseWindow();
     free(inputText);
     return 0;
