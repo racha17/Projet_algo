@@ -238,13 +238,13 @@ int main()
                         {
                             if (recherche(&MaPile, val))
                             {
-                                printf("La valeur %d a été trouvée dans la pile.\n", val);
+                                printf("La valeur %d a ete trouvee dans la pile.\n", val);
 
                                 trouve = 1;
                             }
                             else
                             {
-                                printf("La valeur %d n'existe pas dans la pile.\n", val);
+                                printf("La valeur %d n existe pas dans la pile.\n", val);
                                 trouve = 2;
                             }
                         }
