@@ -169,9 +169,12 @@ int main()
 
     float animationProgress = 0.0f;
     float animationProgressThreshold = 0.5f;
+
     int trouve = 0;
     bool showExplanation = false;
+
     int valeurRecherchee;
+
     while (!WindowShouldClose())
     {
         for (int i = 0; i < MAX_BUTTONS; i++)
@@ -254,7 +257,7 @@ int main()
                     }
                 }
             }
-
+            else
             {
                 buttons[i].color = DARKPURPLE;
                 buttons[i].pressed = false;
@@ -285,12 +288,9 @@ int main()
                         else
                         {
                             supAnimation = true;
+                            supressed = true;
                             printf("la valeur %d a ete supprimee.\n", tosupress);
                         }
-                    }
-                    else
-                    {
-                        supressed = true;
                     }
                 }
                 else
