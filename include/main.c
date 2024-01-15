@@ -139,7 +139,7 @@ int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Project");
     InitAudioDevice();
-    Music music = LoadMusicStream("recherchevoice.mp3");
+    Music music = LoadMusicStream("https://github.com/racha17/Projet_algo/blob/main/recherchevoice.mp3");
     music.looping = false;
     Button buttons[MAX_BUTTONS] = {
         {{50, 50, BUTTON_WIDTH, BUTTON_HEIGHT}, DARKPURPLE, "Create", false},
